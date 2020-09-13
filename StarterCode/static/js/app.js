@@ -2,7 +2,7 @@
 var tableData = data;
 console.log(tableData);
 
-//reference to table body
+//reference table body
 var tbody = d3.select('tbody');
 
 // data.js console weather data
@@ -18,3 +18,29 @@ console.log(data);
      });
    });
 
+
+
+var submit = d3.select("#submit");
+
+submit.on("click", function() {
+    d3.event.preventDefault();
+    d3.select(".summary").html("");
+
+    // user input as variable
+    var inputElement = d3.select("#datetime");
+    var inputValue = inputElement.property("value");
+ 
+   
+    // filter
+    var filteredData = tableData.filter(tableData => tableData.datetime === inputValue);
+ 
+   
+    // loop 
+    filteredData.forEach((dateData) => {
+      var row = tbody.append("tr");
+      Object.entries(dateData).forEach(([key, value]) => {
+        var cell = tbody.append("td");
+        cell.text(value);
+      });
+    });
+});
